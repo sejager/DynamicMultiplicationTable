@@ -10,10 +10,25 @@ This is the HTML page for a dynamic multiplication table.
 <head>
     <title>Multiplication Table</title>
     <meta charset="utf-8">
-    <!-- <link href="pacific.css" rel="stylesheet"> -->
+    <link href="multtable.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h1>Dynamic Multiplication Table</h1>
+    <header><h1>Dynamic Multiplication Table</h1></header>
+
+    <!-- Data entry table -->
+    <form> <!-- action="/action_page.php">-->
+        <h2>Please enter the table ranges:</h2>
+        <label for="fname">Minimum Column Value:</label>
+        <input type="number" id="mincol" name="mincol" value="1"><br>
+        <label for="fname">Maximum Column Value:</label>
+        <input type="number" id="maxcol" name="maxcol" value="10"><br>
+        <label for="fname">Minimum Row Value:</label>
+        <input type="number" id="minrow" name="minrow" value="1"><br>
+        <label for="fname">Maximum Row Value:</label>
+        <input type="number" id="maxrow" name="maxrow" value="10"><br>
+        <input type="submit" value="Submit">
+    </form> 
+  <script src="multtable.js"></script>
 </body>
 </html>
