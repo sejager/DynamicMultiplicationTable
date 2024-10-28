@@ -1,9 +1,10 @@
 /*
 File: multtable.js
-Created by Sebastian Gyger
-Part of HW3 for GUI I at UMass Lowell
+Created by sejager
 This is a JavaScript file to make the dynamic multiplication table dynamic.
 */
+
+// Thanks to various w3schools pages for helping.
 
 function tableCreate() {
     // Get the values from the submission form to make a table
@@ -13,6 +14,7 @@ function tableCreate() {
     var maxrow = document.getElementById("maxrow").value;
 
     // Get rid of the old table or validation message if necessary.
+    // Thanks to https://stackoverflow.com/a/32777600
     if (document.getElementById("tableContainer")) {
         var oldContainer = document.getElementById("tableContainer");
         oldContainer.parentElement.removeChild(oldContainer);
@@ -39,27 +41,33 @@ function tableCreate() {
 
     const tblBody = document.createElement("tbody");
 
-    var row, cell, cellText;
+    var row, cell, cellNo;
     
-    // Create the table
+    /* Create the table cell by cell, column by column, row by row by
+    creating elements for each cell and then inserting text nodes within them
+    and then inserting the cell into the row. Next insert the row into the
+    table body until it is complete before placing the table body within the
+    table. */
+    // Thanks to https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Traversing_an_HTML_table_with_JavaScript_and_DOM_Interfaces
     for (let i = minrow - 1; i <= maxrow; i++) {
         row = document.createElement("tr");
         for (let j = mincol - 1; j <= maxcol; j++) {
+            // Exceptions for header rows and columns
             if (i == minrow - 1) {
                 cell = document.createElement("th");
                 if (j == mincol - 1) {
-                    cellText = document.createTextNode("");
+                    cellNo = document.createTextNode("");
                 } else {
-                    cellText = document.createTextNode(j)
+                    cellNo = document.createTextNode(j)
                 }
             } else if (j == mincol - 1) {
                 cell = document.createElement("th");
-                cellText = document.createTextNode(i)
+                cellNo = document.createTextNode(i)
             } else {
                 cell = document.createElement("td");
-                cellText = document.createTextNode(i * j);
+                cellNo = document.createTextNode(i * j);
             }
-            cell.appendChild(cellText);
+            cell.appendChild(cellNo);
             row.appendChild(cell);
         }
     
@@ -71,6 +79,9 @@ function tableCreate() {
     document.body.appendChild(tblCntnr);
     document.getElementById("tableContainer").appendChild(tbl);
 }
+
+/* Prevents the program from accepting too large a workload and also
+lets the user know what to do differently. */
 
 function validateForm() {
     var mincol = Number(document.getElementById("mincol").value);
@@ -107,7 +118,8 @@ function validateForm() {
     }
 }
 
-
+// Have the submit button be the trigger to create the table
+// Thanks to https://stackoverflow.com/a/69773796
 var btn = document.getElementById("subbtn");
 btn.addEventListener("click", () => {
     tableCreate();

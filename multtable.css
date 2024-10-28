@@ -1,9 +1,10 @@
 /*
 File: multtable.css
-Created by Sebastian Gyger
-Part of HW3 for GUI I at UMass Lowell
+Created by sejager
 This is a stylesheet to format the dynamic multiplication table.
 */
+
+/* All the elements should be cenetered within the webbrowser.*/
 
 h1 {
     font-size: 2em;
@@ -37,11 +38,13 @@ input {
     margin: 4px;
 }
 
+/* Only let users input numbers to save everybody a headache. */
 input[type=number] {
     border-radius: 4px;
     width: 3em;
 }
 
+/* Should be clear when the button is hit. */
 input[type=submit] {
     width: 65px;
     display: block;
@@ -56,6 +59,8 @@ input[type=submit]:hover {
     background-color: lightgray;
 }
 
+/* The table can only get so large before it scrolls to avoid massive tables from looking terrible. */
+/* Thanks to https://stackoverflow.com/a/11152394 */
 #tableContainer {
     max-width: 70%;
     max-height: 500px;
@@ -82,6 +87,8 @@ tr:nth-child(odd) {
     background-color: lightgray;
 }
 
+/* The header column and row should always be visible to make the table easily legible for larger tables. */
+/* Thanks to https://stackoverflow.com/a/47923622 */
 th {
     background-color: black;
     color: white;
