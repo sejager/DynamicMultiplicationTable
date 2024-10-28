@@ -12,13 +12,22 @@ function tableCreate() {
     var minrow = document.getElementById("minrow").value;
     var maxrow = document.getElementById("maxrow").value;
 
-    // Create a new table container with all its contents
-    // Remove an old one if it exists
-
+    // Get rid of the old table or validation message if necessary.
     if (document.getElementById("tableContainer")) {
         var oldContainer = document.getElementById("tableContainer");
         oldContainer.parentElement.removeChild(oldContainer);
     }
+
+    if (document.getElementById("validmsg")) {
+        var oldMsg = document.getElementById("validmsg");
+        oldMsg.parentElement.removeChild(oldMsg);
+    }
+
+    // Exit the function if the values aren't valid
+    if (validateForm() == false)
+        return 0;
+
+    // Create a new table container with all its contents
 
     const tblCntnr = document.createElement("div");
     tblCntnr.setAttribute("id", "tableContainer");
@@ -64,21 +73,42 @@ function tableCreate() {
 }
 
 function validateForm() {
-    var mincol = document.getElementById("mincol").value;
-    var maxcol = document.getElementById("maxcol").value;
-    var minrow = document.getElementById("minrow").value;
-    var maxrow = document.getElementById("maxrow").value;
+    var mincol = Number(document.getElementById("mincol").value);
+    var maxcol = Number(document.getElementById("maxcol").value);
+    var minrow = Number(document.getElementById("minrow").value);
+    var maxrow = Number(document.getElementById("maxrow").value);
 
+    // Possible error cases, textContent explains each case
     if (mincol >= maxcol || minrow >= maxrow) {
-        var msg = document.createTextNode("Minimum values must be lower than the maximum values.");
-        document.body.appendChild.apply(msg);
+        const msg = document.createElement("p");
+        msg.setAttribute("id", "validmsg");
+        msg.textContent = "The minimum values must be lower than the maximum values.";
+        document.body.appendChild(msg);
+        return false;
     }
+    else if((maxrow - minrow) > 100 || (maxcol - mincol) > 100) {
+        const msg = document.createElement("p");
+        msg.setAttribute("id", "validmsg");
+        msg.textContent = "The difference between the minimum and maximum values must not exceed 100.";
+        document.body.appendChild(msg);
+        return false;
+    }
+    else if (Math.abs(minrow) > 999 || Math.abs(maxrow) > 999 || Math.abs(mincol) > 999 || Math.abs(maxcol) > 999) {
+        const msg = document.createElement("p");
+        msg.setAttribute("id", "validmsg");
+        msg.textContent = "The values must be numbers between -999 and 999.";
+        document.body.appendChild(msg);
+        return false;
+    }
+
+    // Good to go!
     else {
+        return true;
     }
 }
+
 
 var btn = document.getElementById("subbtn");
 btn.addEventListener("click", () => {
     tableCreate();
 })
-
